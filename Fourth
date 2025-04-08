@@ -1,0 +1,22 @@
+// Function to turn it down
+function turnItDown(text) {
+    // Convert text to lowercase
+    let loweredText = text.toLowerCase();
+    
+    // Replace exclamation points with smiley faces
+    let updatedText = loweredText.replace(/!/g, ":)");
+
+    // Return the updated string
+    return updatedText;
+}
+
+// Main function to test
+function start() {
+    let text = "WHY ARE YOU YELLING!";
+    let result = turnItDown(text);
+    console.log(result);
+
+    // You can test additional strings here
+    console.log(turnItDown("STOP SHOUTING!!!"));
+    console.log(turnItDown("HELLO THERE! HOW ARE YOU?"));
+}
