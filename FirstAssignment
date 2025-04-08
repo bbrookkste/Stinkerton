@@ -1,0 +1,22 @@
+function findMutuals(arr1, arr2) {
+    let mutuals = [];
+
+    // Check each friend in arr1 to see if they're also in arr2
+    arr1.forEach(friend => {
+        if (arr2.includes(friend)) {
+            mutuals.push(friend);
+        }
+    });
+
+    // Output as required
+    println("First person has " + arr1.length + " friends.");
+    println("Second person has " + arr2.length + " friends.");
+    println("They have " + mutuals.length + " mutual friends.");
+    println("Mutual friends: " + mutuals.join(", "));
+}
+
+// Example test arrays
+let person1 = ["Alice", "Bob", "Charlie", "David", "Eve"];
+let person2 = ["Charlie", "Eve", "Frank", "George", "Alice"];
+
+findMutuals(person1, person2);
