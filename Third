@@ -1,0 +1,39 @@
+// 1. Generate dice rolls
+function generateSample(num) {
+    let rolls = [];
+    for (let i = 0; i < num; i++) {
+        let roll = Math.floor(Math.random() * 6) + 1; // random int from 1 to 6
+        rolls.push(roll);
+    }
+    return rolls;
+}
+
+// 2. Count occurrences of each face (1 to 6)
+function countSample(array) {
+    let counts = [0, 0, 0, 0, 0, 0]; // indices 0 to 5 => sides 1 to 6
+    array.forEach(roll => {
+        counts[roll - 1]++;
+    });
+    return counts;
+}
+
+// 3. Calculate percentages
+function evaluatePercents(counts) {
+    let total = counts.reduce((sum, val) => sum + val, 0);
+    return counts.map(count => (count / total * 100).toFixed(1));
+}
+
+// Main function to run the simulation
+function start() {
+    let numRolls = 100;
+    let rolls = generateSample(numRolls);
+    let counts = countSample(rolls);
+    let percents = evaluatePercents(counts);
+
+    println("Number of rolls: " + numRolls);
+    println("Percents of distribution:");
+
+    percents.forEach((percent, index) => {
+        println("Side " + (index + 1) + ": " + percent + "%");
+    });
+}
