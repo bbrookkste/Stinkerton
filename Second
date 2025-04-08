@@ -1,0 +1,48 @@
+// 1. Check if all items in array are numbers
+function checkIfAllArray(arr) {
+    return arr.every(value => typeof value === "number");
+}
+
+// 2. Convert array from one unit to another
+function convertArray(arr, originalUnit, newUnit) {
+    if (originalUnit === "lbs" && newUnit === "g") {
+        return arr.map(value => value * 454);
+    } else if (originalUnit === "lbs" && newUnit === "kg") {
+        return arr.map(value => value * 0.453592);
+    } else {
+        println("Invalid units.");
+        return [];
+    }
+}
+
+// 3. Calculate volumes (volume = mass / density)
+function calculateVolumes(masses, density) {
+    return masses.map(mass => mass / density);
+}
+
+// 4. Display array with unit
+function displayArrayWithUnit(arr, unit) {
+    arr.forEach((value, index) => {
+        println("Index " + index + ": " + value.toFixed(2) + " " + unit);
+    });
+}
+
+// Main program
+function start() {
+    let ironMassesLbs = [2, 4.5, 1.2, 5]; // lbs
+    let density = 7.87; // g/cm³ for iron
+
+    // 1. Check if all are numbers
+    let allNumbers = checkIfAllArray(ironMassesLbs);
+    println("The data are all numbers: " + allNumbers);
+
+    // 2. Convert lbs to grams
+    let massesInGrams = convertArray(ironMassesLbs, "lbs", "g");
+
+    // 3. Calculate volumes
+    let volumes = calculateVolumes(massesInGrams, density);
+
+    // 4. Display volumes
+    println("Volumes in cm³:");
+    displayArrayWithUnit(volumes, "cm³");
+}
