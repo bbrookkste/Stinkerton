@@ -1,0 +1,121 @@
+function wordAssociationGame() {
+  let category = "";
+  const bank = [];
+  const userList = [];
+  let score = 0;
+
+  async function getCategoryFromUser() {
+    return new Promise((resolve) => {
+      const category = prompt("Give the user a category and ask them for 5 words associated with that category.");
+      resolve(category);
+    });
+  }
+
+  function informUserOfCategory() {
+    alert(`The category is: ${category}. Please enter 5 words associated with it.`);
+  }
+
+  async function getUserWords() {
+    for (let i = 0; i < 5; i++) {
+      const word = await getWordFromUser(i + 1);
+      userList.push(formatWord(word));
+    }
+  }
+
+  async function getWordFromUser(wordNumber) {
+    return new Promise((resolve) => {
+      let input = prompt(`Enter word ${wordNumber}:`);
+      if (input === null) {
+        input = ""; // Handle case where user cancels
+      }
+      resolve(input);
+    });
+  }
+
+  function formatWord(word) {
+    return word.toLowerCase().trim(); // Account for capitalization and extra spaces
+  }
+
+  function addToBank(word) {
+    if (!bank.includes(word)) {
+      bank.push(word);
+    }
+  }
+
+  function compareLists() {
+    alert("Now the computer will provide 5 potential words related to the category.");
+    const computerGuesses = getComputerGuesses();
+    computerGuesses.forEach(addToBank);
+
+    userList.forEach(userWord => {
+      if (bank.includes(userWord)) {
+        score++;
+      }
+    });
+  }
+
+  function getComputerGuesses() {
+    // Simulate computer providing 5 guesses that fit within the category.
+    // In a real application, this would involve some form of data or logic.
+    // For this exercise, we'll just provide some example words.
+    const exampleGuesses = ["apple", "banana", "orange", "grape", "kiwi"];
+    return exampleGuesses.map(formatWord);
+  }
+
+  function informUserOfWordsInBank() {
+    alert(`The words in the bank are: ${bank.join(", ")}`);
+  }
+
+  function keepScore() {
+    alert(`You guessed ${score} words that were also in the computer's list.`);
+  }
+
+  function informUserOfScore() {
+    alert(`Your score is: ${score}`);
+  }
+
+  function informUserOfWordsNotGuessed() {
+    const notGuessed = bank.filter(word => !userList.includes(word));
+    if (notGuessed.length > 0) {
+      alert(`The words from the computer's list that you did not guess are: ${notGuessed.join(", ")}`);
+    } else {
+      alert("You guessed all the words in the computer's list!");
+    }
+  }
+
+  function informUserOfFinalScore() {
+    alert(`Your final score is: ${score} out of ${bank.length} possible matches.`);
+  }
+
+  function organizeOutput() {
+    const outputDiv = document.createElement('div');
+    outputDiv.innerHTML = `
+      <h2>Word Association Game Results</h2>
+      <p>Category: ${category}</p>
+      <p>Your Guesses: ${userList.join(", ")}</p>
+      <p>Computer's Bank: ${bank.join(", ")}</p>
+      <p>Words You Guessed: ${userList.filter(word => bank.includes(word)).join(", ") || "None"}</p>
+      <p>Words You Missed: ${bank.filter(word => !userList.includes(word)).join(", ") || "None"}</p>
+      <p>Your Score: ${score} out of ${bank.length}</p>
+    `;
+    document.body.appendChild(outputDiv);
+    alert("The results are also displayed on the page.");
+  }
+
+  async function runGame() {
+    category = await getCategoryFromUser();
+    informUserOfCategory();
+    await getUserWords();
+    compareLists();
+    informUserOfWordsInBank();
+    keepScore();
+    informUserOfScore();
+    informUserOfWordsNotGuessed();
+    informUserOfFinalScore();
+    organizeOutput();
+  }
+
+  runGame();
+}
+
+wordAssociationGame();
